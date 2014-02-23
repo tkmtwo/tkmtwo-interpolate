@@ -35,7 +35,7 @@ public final class TokenCountingInterpolatorCallback
    * @return an <code>int</code> value
    */
   public int getCount() {
-    return this.tokenCount;
+    return tokenCount;
   }
   
   
@@ -44,9 +44,10 @@ public final class TokenCountingInterpolatorCallback
    * @see AbstractInterpolatorCallback#replaceInternal(String, int, CharSequence, CharSequence)
    */
   protected String replaceInternal(String token,
-                                 int tokenNumber,
-                                 CharSequence tokenStart,
-                                 CharSequence tokenStop) {
+                                   int tokenNumber,
+                                   CharSequence tokenStart,
+                                   CharSequence tokenStop) {
+    tokenCount++;
     return null;
   }
 }

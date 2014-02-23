@@ -188,4 +188,46 @@ public final class Interpolator {
   
   
   
+  
+  
+  
+  
+
+  /**
+   * Gets a count of tokens present in <code>String s</code> using
+   * default token markers.
+   *
+   * @param s a <code>String</code> value
+   * @return an <code>int</code> value
+   */
+  public static int getTokenCount(String s) {
+
+    return getTokenCount(s, DEFAULT_TOKEN_START, DEFAULT_TOKEN_STOP);
+
+  }
+
+
+
+  /**
+   * Gets a count of tokens present in <code>String s</code> using
+   * custom token markers.
+   *
+   * @param s a <code>String</code> value
+   * @param intStart a <code>String</code> value
+   * @param intStop a <code>String</code> value
+   * @return an <code>int</code> value
+   */
+  public static int getTokenCount(String s,
+                                  String intStart,
+                                  String intStop) {
+
+    TokenCountingInterpolatorCallback tcc = new TokenCountingInterpolatorCallback();
+    interpolate(s, tcc, intStart, intStop);
+    return tcc.getCount();
+
+  }
+  
+  
+  
+  
 }
