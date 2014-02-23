@@ -1,0 +1,15 @@
+
+subprojects {
+  
+  repositories {
+    mavenCentral()
+  }
+  
+  group = 'com.tkmtwo'
+  version = '1.0.0'
+  
+}
+
+
+task wrapper(type: Wrapper)
+

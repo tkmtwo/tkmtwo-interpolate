@@ -1,0 +1,87 @@
+/*
+ *
+ * Copyright 2014 Tom Mahaffey
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package com.tkmtwo.interpolate;
+
+import static org.junit.Assert.assertEquals;
+
+
+/**
+ *
+ */
+public class InterpolatorCallbackBase {
+
+  protected void runInterpolator(InterpolatorCallback ic,
+                                 String tokenStart, String tokenPrefix, String tokenStop,
+                                 String stringForName, String stringForAge) {
+    
+    String outBegin = String.format("%s is my name and %s is my age", stringForName, stringForAge);
+    String inStart = String.format("%s%sname%s is my name and %s%sage%s is my age",
+                                   tokenStart, tokenPrefix, tokenStop,
+                                   tokenStart, tokenPrefix, tokenStop);
+    assertEquals(outBegin,
+                 Interpolator.interpolate(inStart, ic, tokenStart, tokenStop));
+    
+    
+    String outEnd = String.format("my name is %s and my age is %s", stringForName, stringForAge);
+    String inEnd = String.format("my name is %s%sname%s and my age is %s%sage%s",
+                                 tokenStart, tokenPrefix, tokenStop,
+                                 tokenStart, tokenPrefix, tokenStop);
+    assertEquals(outEnd,
+                 Interpolator.interpolate(inEnd, ic, tokenStart, tokenStop));
+    
+    
+    
+    String outPadded = String.format("my name is %s and i am %s years old", stringForName, stringForAge);
+    String inPadded = String.format("my name is %s%sname%s and i am %s%sage%s years old",
+                                    tokenStart, tokenPrefix, tokenStop,
+                                    tokenStart, tokenPrefix, tokenStop);
+    assertEquals(outPadded,
+                 Interpolator.interpolate(inPadded, ic, tokenStart, tokenStop));
+
+
+
+    String outPlain = String.format("%s%s", stringForName, stringForAge);
+    String inPlain = String.format("%s%sname%s%s%sage%s",
+                                   tokenStart, tokenPrefix, tokenStop,
+                                   tokenStart, tokenPrefix, tokenStop);
+    
+    assertEquals(outPlain,
+                 Interpolator.interpolate(inPlain, ic, tokenStart, tokenStop));
+
+
+
+
+    //inNoReplacements = "I have no tokens for ${this}, ${that}, ${theother} to replace";
+    String noRepl = String.format("I have no tokens for %s%sthis%s, %s%sthat%s, %s%stheother%s to replace",
+                                  tokenStart, tokenPrefix, tokenStop,
+                                  tokenStart, tokenPrefix, tokenStop,
+                                  tokenStart, tokenPrefix, tokenStop);
+
+                                  
+    assertEquals(noRepl,
+                 Interpolator.interpolate(noRepl, ic, tokenStart, tokenStop));
+    
+    
+    
+    
+  }
+  
+  
+  
+  
+}
