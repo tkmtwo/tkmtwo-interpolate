@@ -27,7 +27,7 @@ import java.util.Map;
  *
  * @param <T> any Object.  The <code>toString()</code> method is called during token replacement.
  */
-public final class MappingInterpolatorCallback<T>
+public class MappingInterpolatorCallback<T>
   extends AbstractInterpolatorCallback {
   
   /** internal map of token/values. */
@@ -352,7 +352,8 @@ public final class MappingInterpolatorCallback<T>
                                    CharSequence tokenStop) {
     logger.trace("Searching map for '{}' relplacement...", token);
     if (map.containsKey(token)) {
-      String s = map.get(token).toString();
+      //String s = map.get(token).toString();
+      String s = formatValue(map.get(token));
       logger.trace("Value found is '{}'", s);
       return s;
     }
@@ -360,6 +361,8 @@ public final class MappingInterpolatorCallback<T>
     return null;
   }
   
-  
+  protected String formatValue(T value) {
+    return value.toString();
+  }
   
 }

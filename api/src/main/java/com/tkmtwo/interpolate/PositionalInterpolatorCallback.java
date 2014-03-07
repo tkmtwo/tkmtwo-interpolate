@@ -17,33 +17,51 @@
  */
 package com.tkmtwo.interpolate;
 
-
+import com.google.common.collect.ImmutableList;
+import java.util.List;
 
 /**
  *
  */
-public final class PositionalInterpolatorCallback
+public class PositionalInterpolatorCallback<T>
     extends AbstractInterpolatorCallback {
   
   
   
-  /** internal array of <code>String</code>s. */
-  private String[] strings;
+  private List<T> values;
   
   
   /**
    * Creates a new <code>PositionalInterpolatorCallback</code> instance.
    *
-   * @param ss a <code>String[]</code> value
+   * @param vs a List of <code>T</code> values
    */
-  public PositionalInterpolatorCallback(String[] ss) {
-    if (ss != null) {
-      strings = new String[ss.length];
-      for (int i = 0; i < ss.length; i++) {
-        strings[i] = ss[i];
-      }
+  public PositionalInterpolatorCallback(List<T> vs) {
+    if (vs == null) {
+      values = ImmutableList.of();
+    } else {
+      values = ImmutableList.copyOf(vs);
     }
   }
+
+
+
+  /**
+   * Creates a new <code>PositionalInterpolatorCallback</code> instance.
+   *
+   * @param tokenPrefix
+   * @param vs a List of <code>T</code> values
+   */
+  public PositionalInterpolatorCallback(String tokenPrefix,
+                                        List<T> vs) {
+    setTokenPrefix(tokenPrefix);
+    if (vs == null) {
+      values = ImmutableList.of();
+    } else {
+      values = ImmutableList.copyOf(vs);
+    }
+  }
+  
   
   
   
@@ -55,11 +73,27 @@ public final class PositionalInterpolatorCallback
                                    int tokenNumber,
                                    CharSequence tokenStart,
                                    CharSequence tokenStop) {
-    if (tokenNumber >= strings.length) {
+    if (tokenNumber >= values.size()) {
       return null;
     }
-    return strings[tokenNumber];
+    return formatValue(values.get(tokenNumber));
   }
   
+  
+  
+  
+
+  /**
+   * Formats a value into a String.
+   *
+   * This implementation calls <code>T.toString()</code>.  Sublasses
+   * should override for custom formatting.
+   *
+   * @param value a <code>T</code> value
+   */
+  protected String formatValue(T value) {
+    return value.toString();
+  }
+
   
 }

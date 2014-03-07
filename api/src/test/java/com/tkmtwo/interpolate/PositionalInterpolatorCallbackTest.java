@@ -1,0 +1,53 @@
+/*
+ *
+ * Copyright 2014 Tom Mahaffey
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package com.tkmtwo.interpolate;
+
+
+import static org.junit.Assert.assertEquals;
+
+import com.google.common.collect.ImmutableList;
+import com.tkmtwo.utility.java.net.URIs;
+import java.net.URI;
+//import java.util.HashMap;
+//import java.util.Map;
+//import org.junit.Before;
+import org.junit.Test;
+
+
+
+
+/**
+ *
+ */
+public class PositionalInterpolatorCallbackTest {
+  
+  
+  @Test
+  public void testDocumentationString() {
+    PositionalInterpolatorCallback<String> ic =
+      new PositionalInterpolatorCallback<>("stg.",
+                                           ImmutableList.of("Three", "Shemp"));
+    assertEquals("My favorite of the ${num.stooges} Stooges is ${fav.stooge}",
+                 Interpolator.interpolate("My favorite of the ${num.stooges} Stooges is ${fav.stooge}", ic));
+    assertEquals("My favorite of the Three Stooges is Shemp",
+                 Interpolator.interpolate("My favorite of the ${stg.num.stooges} Stooges is ${stg.fav.stooge}", ic));
+    
+  }
+
+}
+
